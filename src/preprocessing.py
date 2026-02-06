@@ -1,7 +1,11 @@
 import re
 import pandas as pd
 from tqdm import tqdm
-from .config import Config
+
+try:
+    from .config import Config
+except ImportError:
+    from config import Config
 
 def clean_transliteration(text: str) -> str:
     if pd.isna(text): return ""
@@ -54,8 +58,8 @@ def clean_translation(text: str) -> str:
     return text
 
 def preprocess_pipeline():
-    print(f"Starting advanced preprocessing from {Config.RAW_DATA_PATH}...")
-    df = pd.read_csv(Config.RAW_DATA_PATH)
+    print(f"Starting advanced preprocessing from {Config.RAW_TRAIN_FILE}...")
+    df = pd.read_csv(Config.RAW_TRAIN_FILE)
     
     tqdm.pandas(desc="Cleaning Transliteration")
     df['src'] = df['transliteration'].progress_apply(clean_transliteration)
@@ -79,7 +83,7 @@ def preprocess_pipeline():
     print(f"Final dataset size: {after_count} samples.")
 
     Config.setup()
-    df[['src', 'tgt']].to_csv(Config.PROCESSED_DATA_PATH, index=False)
+    df[['src', 'tgt']].to_csv(Config.PROCESSED_TRAIN_FILE, index=False)
     
     print("\nCheck Max Lengths:")
     print(f"Max SRC: {df['src'].str.len().max()} | Max TGT: {df['tgt'].str.len().max()}")

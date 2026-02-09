@@ -58,17 +58,6 @@ def clean_translation(text: str) -> str:
     return text
 
 def simple_sentence_splitter(text, max_length=200):
-    """
-    Simple heuristic sentence splitter for Akkadian texts.
-
-    For production use, you should use Sentences_Oare_FirstWord_LinNum.csv
-    which provides ground-truth sentence boundaries.
-
-    This function:
-    1. Splits on common sentence separators
-    2. Ensures sentences aren't too long
-    3. Preserves meaningful chunks
-    """
     if pd.isna(text):
         return []
 

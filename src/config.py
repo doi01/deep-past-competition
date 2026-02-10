@@ -8,13 +8,13 @@ class Config:
         if IS_KAGGLE
         else os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     )
-    MODEL_NAME = "google/byt5-small"
+    MODEL_NAME = "google/byt5-base"
     MAX_LENGTH = 512
     BATCH_SIZE = 16
     EPOCHS = 20
     LR = 2e-4
     SEED = 42
-
+ 
     if IS_KAGGLE:
         DATA_DIR = "/kaggle/input/deep-past-initiative-machine-translation"
         MODEL_DIR = "/kaggle/input/v1/pytorch/default/1"

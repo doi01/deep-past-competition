@@ -16,6 +16,7 @@ from transformers import (
     TrainerCallback,
 )
 
+from .preprocessing import preprocess_pipeline
 import evaluate
 
 from config import Config
@@ -56,8 +57,9 @@ def main():
         print("GPU:", torch.cuda.get_device_name(0))
 
     # --------- load data ---------
-    print("Loading dataset:", Config.PROCESSED_TRAIN_FILE)
-    df = pd.read_csv(Config.PROCESSED_TRAIN_FILE)
+    print("Loading dataset:", Config.RAW_TRAIN_FILE)
+    df = preprocess_pipeline()
+
 
     required_cols = {"src", "tgt"}
     if not required_cols.issubset(df.columns):
